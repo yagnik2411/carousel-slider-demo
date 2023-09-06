@@ -3,8 +3,13 @@ import 'package:carousel_slider_demo/ytplayer.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
-
-List<String> mediaUrls = [];
+List<String> mediaUrls = [
+  "https://youtube.com/shorts/O4meJOZYPP4?si=s-5otgm-sBKB3F3f",
+  "https://youtu.be/W_dF07JvrJo?si=VPXw-sZLoao9sRUm",
+  "https://commondatastorage.googleapis.com/codeskulptor-demos/riceracer_assets/img/car_2.png",
+  "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+  "https://codeskulptor-demos.commondatastorage.googleapis.com/pang/LdTCEUo.png"
+];
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -12,20 +17,29 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: buildMediaContent(mediaUrls)),
-      bottomNavigationBar: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          buildAddLinkButton(),
-          buildClearListButton(),
-        ],
-      ),
+      body: Center(
+          child: Container(
+            
+              height: MediaQuery.of(context).size.width * 0.9,
+              width: MediaQuery.of(context).size.width * 0.9,
+              padding: EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                color: Colors.blueGrey.shade100,
+                border: Border.all(color: Colors.grey),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: buildMediaContent(mediaUrls))),
+      // bottomNavigationBar: Row(
+      //   crossAxisAlignment: CrossAxisAlignment.center,
+      //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      //   children: [
+      //     buildAddLinkButton(),
+      //     buildClearListButton(),
+      //   ],
+      // ),
     );
   }
 
@@ -154,27 +168,25 @@ class _MyHomePageState extends State<MyHomePage> {
         mediaWidgets.add(Image.network(mediaUrl, fit: BoxFit.contain));
       } else if (linkCheck(mediaUrl) == "Video") {
         mediaWidgets.add(NormalVideoPlayer(videoUrl: mediaUrl));
-      }
-      else if(linkCheck(mediaUrl) == "Youtube"){
+      } else if (linkCheck(mediaUrl) == "Youtube") {
         mediaWidgets.add(YTPlayer().videoPlayer(mediaUrl));
       }
-     
     }
 
     return CarouselSlider(
       items: mediaWidgets,
       options: CarouselOptions(
-        autoPlay: false,
+        autoPlay: true,
         enlargeCenterPage: true,
         enableInfiniteScroll: false,
-       
+        
       ),
     );
   }
 
-
   String linkCheck(String link) {
-    if (RegExp(r'^(https?:\/\/)?(www\.)?youtube\.com').hasMatch(link)) {
+    if (RegExp(r'^(https?:\/\/)?(www\.)?youtube\.com').hasMatch(link) ||
+        RegExp(r'^(https?:\/\/)?(www\.)?youtu\.be').hasMatch(link) ) {
       return "Youtube";
     } else if (RegExp(r'\.mp4$').hasMatch(link)) {
       return "Video";

@@ -49,7 +49,7 @@ class _NormalVideoPlayerState extends State<NormalVideoPlayer> {
           ,
           child: VideoPlayer(_controller),
         ),
-        SizedBox(height: 10.0), // Add some spacing
+        // Add some spacing
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
